@@ -43,12 +43,12 @@ class Game:
     def __init__(self, dice):
         for die in dice:
             if not isinstance(die, Die):
-                raise TypeError("Value not Die object.")    
+                raise TypeError("Value not Die object.") # clean 
         # check if die in dice have same faces
         self.dice = dice
 
     def play(self, nrolls):
-        self.play_df = pd.DataFrame()
+        self.play_df = pd.DataFrame() # private?
         for die in self.dice:
             play = die.roll_die(nrolls)
             self.play_df[str(self.dice.index(die))] = play
