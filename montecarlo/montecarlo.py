@@ -41,13 +41,28 @@ class Die:
 class Game:
     
     def __init__(self, dice):
-        pass
+        for die in dice:
+            if not isinstance(die, Die):
+                raise TypeError("Value not Die object.")    
+        # check if die in dice have same faces
+        self.dice = dice
 
     def play(self, nrolls):
-        pass
+        self.play_df = pd.DataFrame()
+        for die in self.dice:
+            play = die.roll_die(nrolls)
+            self.play_df[str(self.dice.index(die))] = play
+        self.play_df.index.name = 'roll number'
 
-    def recent_results(self):
-        pass
+    def recent_results(self, wide=True):
+        if wide == True:
+            return self.play_df
+        elif wide == False:
+            self.play_df = self.play_df.stack()
+            self.play_df.index.names = ['roll number', 'die number']
+            return self.play_df
+        else:
+            raise ValueError("Parameter wide accepts True or False.") 
 
 class Analyzer:
 
