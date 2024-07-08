@@ -67,7 +67,10 @@ class Game:
 class Analyzer:
 
     def __init__(self, game):
-        pass
+        if not isinstance(game, Game):
+            raise ValueError("Parameter game must be Game object.")
+        else:
+            self.game = game
 
     def jackpot(self):
         pass
