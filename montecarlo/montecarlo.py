@@ -73,13 +73,27 @@ class Analyzer:
             self.game = game
 
     def jackpot(self):
-        pass
+        results = self.game.recent_results()
+        jackpot = [all(i == results[col][0] for i in results[col]) for col in results]
+        return sum(jackpot)
 
     def face_counts_per_roll(self):
-        pass
+        results = self.game.recent_results()
+        faces = self.game.dice[0].faces.tolist()
+        face_counts_df = pd.DataFrame(columns = faces)
+        face_counts_df.index.name = 'roll number'
+        for col in results: 
+            face_counts_df.loc[len(face_counts_df)] = [results[col].tolist().count(x) for x in faces]
+        return face_counts_df
 
     def combo_count(self):
-        pass
+        face_counts = self.game.recent_results()
+        sorted_face_counts = face_counts.apply(lambda row: sorted(row), axis=1)
+        sorted_df = pd.DataFrame(sorted_face_counts.tolist(), columns = face_counts.columns)
+        combo_df = sorted_df.groupby(list(sorted_df.columns)).size().to_frame(name='count')
+        return combo_df
 
     def permutation_count(self):
-        pass
+        results = self.game.recent_results()
+        perms = results.groupby(list(results.columns)).size()
+        return perms
