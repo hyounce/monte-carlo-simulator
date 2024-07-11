@@ -28,7 +28,7 @@ class Die:
         elif (type(new_weight) != int) and (type(new_weight) != float):
             raise TypeError("New weight must be int or float.")
         else:
-            self.die_df.loc[face_val].iloc[0] = new_weight
+            self.die_df.loc[face_val, "weights"] = new_weight
             self.weights = self.die_df['weights'].tolist()
 
     def roll_die(self, n_rolls=1):
@@ -83,8 +83,9 @@ class Analyzer:
     def jackpot(self):
 
         results = self.game.recent_results()
-        jackpot = [all(i == results[col][0] for i in results[col]) for col in results]
-        return sum(jackpot)
+        # jackpot = [all(i == results[col][0] for i in results[col]) for col in results]
+        jackpot = results.nunique(axis=1) == 1
+        return jackpot.sum()
 
     def face_counts_per_roll(self):
 
