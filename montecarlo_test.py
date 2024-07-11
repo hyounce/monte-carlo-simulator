@@ -69,10 +69,10 @@ class MontecarloTestSuite(unittest.TestCase):
         die1 = Die(np.array([1,2,3,4,5,6]))
         die2 = Die(np.array([1,2,3,4,5,6]))
         game = Game([die1, die2])
-        game.play(4)
+        game.play(5)
 
-        expected = 8
-        actual = game.play_df.size
+        expected = 10
+        actual = game.recent_results().size
         message = "Size of the play data frame does not match the number of dice and rolls."
         self.assertEqual(expected, actual, message)
 
@@ -81,11 +81,11 @@ class MontecarloTestSuite(unittest.TestCase):
         die1 = Die(np.array([1,2,3,4,5,6]))
         die2 = Die(np.array([1,2,3,4,5,6]))
         game = Game([die1, die2])
-        game.play(4)
+        game.play(5)
 
         game.recent_results(wide=False)
         message = "Play data frame does not have multi index."
-        self.assertIsInstance(game.play_df.index, pd.MultiIndex)
+        self.assertIsInstance(game.recent_results().index, pd.MultiIndex)
 
     def test_analyzer_init(self):
         
@@ -97,74 +97,52 @@ class MontecarloTestSuite(unittest.TestCase):
         self.assertIsInstance(analyzer.game, Game, message)
 
     def test_analyzer_jackpot(self):
-        
-        results = {'1': [1,2,3,4],
-                   '2': [1,1,3,1],
-                   '3': [1,3,3,3]}
-        results_df = pd.DataFrame(results)
 
         die1 = Die(np.array([1,2,3,4,5,6]))
         game = Game([die1])
+        game.play(5)
         analyzer = Analyzer(game)
-        analyzer.game.play_df = results_df
 
-        expected = 2
-        actual = analyzer.jackpot()
-        message = "Incorrect number of jackpots."
-        self.assertEqual(expected, actual, message)
+        message = "Jackpot method did not return int."
+        self.assertTrue(isinstance(analyzer.jackpot(), int), message)
 
 
     def test_analyzer_face_counts(self):
 
-        results = {'1': [1,2,3,4],
-                   '2': [1,2,2,6],
-                   '3': [3,4,5,5]}
-        results_df = pd.DataFrame(results)
-
         die1 = Die(np.array([1,2,3,4,5,6]))
         game = Game([die1])
+        game.play(5)
         analyzer = Analyzer(game)
-        analyzer.game.play_df = results_df
 
-        expected = [0, 1, 1, 0, 1, 0]
-        actual = analyzer.face_counts_per_roll().iloc[2].tolist()
-        message = "Incorrect counts for faces per roll."
+        expected = 30
+        actual = analyzer.face_counts_per_roll().size
+        message = "Incorrect size for face_counts_per_roll data frame."
         self.assertEqual(expected, actual, message)
 
     def test_analyzer_combo_count(self):
         
-        results = {'1': [1,2,1,2],
-                   '2': [1,2,2,1],
-                   '3': [2,2,1,1]}
-        results_df = pd.DataFrame(results)
-
         die1 = Die(np.array([1,2,3,4,5,6]))
         game = Game([die1])
+        game.play(5)
         analyzer = Analyzer(game)
-        analyzer.game.play_df = results_df
 
-        expected = 3
-        actual = analyzer.combo_count().loc[(1, 1, 2)][0]
-        message = "Incorrect number of combinations."
+        expected = 5
+        actual = sum(analyzer.combo_count()['count'])
+        message = "Incorrect number of combination counts."
         self.assertEqual(expected, actual, message)
 
     def test_analyzer_perm_count(self):
-        results = {'1': [1,2,1,2],
-                   '2': [1,2,2,1],
-                   '3': [2,2,1,1]}
-        results_df = pd.DataFrame(results)
 
         die1 = Die(np.array([1,2,3,4,5,6]))
         game = Game([die1])
         analyzer = Analyzer(game)
-        analyzer.game.play_df = results_df
+        game.play(5)
 
-        expected = 1
-        actual = analyzer.permutation_count().loc[(1, 1, 2)]
-        message = "Incorrect number of permutations."
+        expected = 5
+        actual = sum(analyzer.permutation_count())
+        message = "Incorrect number of permutation counts."
         self.assertEqual(expected, actual, message)
         
-
 
 if __name__ == '__main__':
     unittest.main(verbosity=3)

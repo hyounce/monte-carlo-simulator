@@ -42,32 +42,34 @@ class Die:
 
 class Game:
 
+    __play_df = pd.DataFrame()
+
     def __init__(self, dice):
 
         for die in dice:
             if not isinstance(die, Die):
-                raise TypeError("Value not Die object.") # clean 
-        # check if die in dice have same faces
+                raise TypeError("Values of dice must be Die objects.") 
+            
         self.dice = dice
 
     def play(self, nrolls):
 
-        self.play_df = pd.DataFrame() # make private 
+        # self.play_df = pd.DataFrame()  
 
         for die in self.dice:
             play = die.roll_die(nrolls)
-            self.play_df[str(self.dice.index(die))] = play
+            self.__play_df[str(self.dice.index(die))] = play
 
-        self.play_df.index.name = 'roll number'
+        self.__play_df.index.name = 'roll number'
 
     def recent_results(self, wide=True):
 
         if wide == True:
-            return self.play_df
+            return self.__play_df
         elif wide == False:
-            self.play_df = self.play_df.stack()
-            self.play_df.index.names = ['roll number', 'die number']
-            return self.play_df
+            self.__play_df = self.__play_df.stack()
+            self.__play_df.index.names = ['roll number', 'die number']
+            return self.__play_df
         else:
             raise ValueError("Parameter wide accepts True or False.") 
 
@@ -83,9 +85,8 @@ class Analyzer:
     def jackpot(self):
 
         results = self.game.recent_results()
-        # jackpot = [all(i == results[col][0] for i in results[col]) for col in results]
         jackpot = results.nunique(axis=1) == 1
-        return jackpot.sum()
+        return int(jackpot.sum())
 
     def face_counts_per_roll(self):
 
