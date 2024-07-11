@@ -99,8 +99,8 @@ class MontecarloTestSuite(unittest.TestCase):
     def test_analyzer_jackpot(self):
         
         results = {'1': [1,2,3,4],
-                   '2': [1,1,1,1],
-                   '3': [3,3,3,3]}
+                   '2': [1,1,3,1],
+                   '3': [1,3,3,3]}
         results_df = pd.DataFrame(results)
 
         die1 = Die(np.array([1,2,3,4,5,6]))
