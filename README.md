@@ -37,25 +37,27 @@ Welcome to the montecarlo module.
 A class representing a die object with N faces and W weights, which can be rolled to select a face one or more times.
 
 **__init__(self, faces):**
-  Initializes the Die with faces and default weights of 1.0. 
   
-  Input:
-  - faces: A Numpy Array of unique numeric or string values. 
-  
-  Raises:
-  - TypeError: If faces not a Numpy Array.
-  - ValueError: If values in array are not numerics or strings, or if there are repeating values.
+    Initializes the Die with faces and default weights of 1.0. 
+    
+    Input:
+    - faces: A Numpy Array of unique numeric or string values. 
+    
+    Raises:
+    - TypeError: If faces not a Numpy Array.
+    - ValueError: If values in array are not numerics or strings, or if there are repeating values.
 
 **set_weight(self, face_val, new_weight):**
-  Changes a face's weight to a new value.
 
-  Input:
-  - face_val: String or numeric value corresponding to a value in faces.
-  - new_weight: int or float
-
-  Raises:
-  - IndexError: If face_val not in faces array.
-  - TypeError: If new_weight not int or float.
+    Changes a face's weight to a new value.
+  
+    Input:
+    - face_val: String or numeric value corresponding to a value in faces.
+    - new_weight: int or float
+  
+    Raises:
+    - IndexError: If face_val not in faces array.
+    - TypeError: If new_weight not int or float.
 
 
 ## Usage:
