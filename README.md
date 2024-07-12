@@ -43,43 +43,43 @@ Attributes:
 
 **__init__(self, faces):**
   
-  Initializes the Die with faces and default weights of 1.0. 
-  
-  Input:
-  - faces: A Numpy Array of unique numeric or string values. 
-  
-  Raises:
-  - TypeError: If faces not a Numpy Array.
-  - ValueError: If values in array are not numerics or strings, or if there are repeating values.
+    Initializes the Die with faces and default weights of 1.0. 
+    
+    Input:
+    - faces: A Numpy Array of unique numeric or string values. 
+    
+    Raises:
+    - TypeError: If faces not a Numpy Array.
+    - ValueError: If values in array are not numerics or strings, or if there are repeating values.
 
 **set_weight(self, face_val, new_weight):**
 
-  Changes a face's weight to a new value.
-
-  Input:
-  - face_val: String or numeric value corresponding to a value in faces.
-  - new_weight: int or float
-
-  Raises:
-  - IndexError: If face_val not in faces array.
-  - TypeError: If new_weight not int or float.
+    Changes a face's weight to a new value.
+  
+    Input:
+    - face_val: String or numeric value corresponding to a value in faces.
+    - new_weight: int or float
+  
+    Raises:
+    - IndexError: If face_val not in faces array.
+    - TypeError: If new_weight not int or float.
 
 **roll_die(self, n_rolls=1):**
-
-  Selects a face one or more times and returns a list of results.
-
-  Input:
-  - n_rolls: int representing how many times to roll. Defaults to 1.
-
-  Output:
-  - rolls: Returns list of faces that were selected from each roll.
+  
+    Selects a face one or more times and returns a list of results.
+  
+    Input:
+    - n_rolls: int representing how many times to roll. Defaults to 1.
+  
+    Output:
+    - rolls: Returns list of faces that were selected from each roll.
 
 **current_state(self):**
 
-  Returns a dataframe storing the die's faces and their corresponding weights.
-
-  Output:
-  - die_df: A Pandas dataframe.
+    Returns a dataframe storing the die's faces and their corresponding weights.
+  
+    Output:
+    - die_df: A Pandas dataframe.
 
 ### Game Class: 
 A class representing a game object consisting of one or more similar dice (Die objects) one or more times.
@@ -91,29 +91,29 @@ Attributes:
 
 **__init__(self,dice):**
 
-  Initializes the Game with a list of Die objects.
-
-  Inputs: 
-  - dice: A list of one or more similar Die objects.
-
-  Raises:
-  - TypeError: If values of dice are not Die objects.
+    Initializes the Game with a list of Die objects.
+  
+    Inputs: 
+    - dice: A list of one or more similar Die objects.
+  
+    Raises:
+    - TypeError: If values of dice are not Die objects.
 
 **play(self, nrolls):**
 
-  Rolls all the dice a specified number of times and stores the results in a dataframe.
-
-  Inputs:
-  - nrolls: int representing the number of times to roll the dice.
+    Rolls all the dice a specified number of times and stores the results in a dataframe.
+  
+    Inputs:
+    - nrolls: int representing the number of times to roll the dice.
 
 **recent_results(self, wide=True):**
-
-  Returns the dataframe of results of the most recent play, either in wide or narrow format.
-
-  Inputs:
-  - wide: Boolean value corresponding to wide or narrow. Defaults to True.
-
-  Raises:
+  
+    Returns the dataframe of results of the most recent play, either in wide or narrow format.
+  
+    Inputs:
+    - wide: Boolean value corresponding to wide or narrow. Defaults to True.
+  
+    Raises:
   - ValueError: If wide not set to True or False.
 
 ### Analyzer Class: 
@@ -124,45 +124,45 @@ Attributes:
     
 **__init__(self, game):**
 
-  Initializes an Analyzer object with a Game object.
-
-  Inputs:
-  - game: A Game object. 
-
-  Raises:
-  - ValueError: If game is not a Game object.
+    Initializes an Analyzer object with a Game object.
+  
+    Inputs:
+    - game: A Game object. 
+  
+    Raises:
+    - ValueError: If game is not a Game object.
 
 **jackpot(self):**
 
-  Returns the number of times all dice rolled the same face in a game. 
-  
-  Output:
-  - count: An int representing the number of jackpots in a single game.
+    Returns the number of times all dice rolled the same face in a game. 
+    
+    Output:
+    - count: An int representing the number of jackpots in a single game.
 
 **face_counts_per_roll(self):**
 
-  Computes the number of times each die face was rolled in a game and returns a Pandas dataframe
-  of the results. 
-
-  Output:
-  - face_counts_df: A Pandas dataframe with an index of the roll number, face values as columns
-      and count values in the cells.
+    Computes the number of times each die face was rolled in a game and returns a Pandas dataframe
+    of the results. 
+  
+    Output:
+    - face_counts_df: A Pandas dataframe with an index of the roll number, face values as columns
+        and count values in the cells.
 
 **combo_count(self):**
 
-  Computes the distinct combinations of faces rolled along with their counts and returns a 
-  Pandas dataframe of the results. 
-
-  Output:
-  - combo_df: A Pandas dataframe with a MultiIndex of combinations and a column for the associated counts.
+    Computes the distinct combinations of faces rolled along with their counts and returns a 
+    Pandas dataframe of the results. 
+  
+    Output:
+    - combo_df: A Pandas dataframe with a MultiIndex of combinations and a column for the associated counts.
 
 **permutation_count(self):**
-
-  Computes the distinct permutations of faces rolled along with their counts and returns a Pandas
-  dataframe of the results. 
-
-  Output: 
-  - perms: A Pandas dataframe with a MultiIndex of permutations and a column for the associated counts. 
+  
+    Computes the distinct permutations of faces rolled along with their counts and returns a Pandas
+    dataframe of the results. 
+  
+    Output: 
+    - perms: A Pandas dataframe with a MultiIndex of permutations and a column for the associated counts. 
 
 ## Usage:
 To import and use the Die, Game, and Analyzer classes in a python file: 
