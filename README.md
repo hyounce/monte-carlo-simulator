@@ -8,3 +8,25 @@ Files and materials for DS5100's final project: a MonteCarlo module. Package inc
 ```
 cd \path\to\location
 ```
+**Step 3:** Use git to download the contents of this repository to your own computer by typing
+```
+git clone https://github.com/hyounce/ds5100-finalproject-ksg8xy/
+```
+**Step 4:** To work inside this folder, type
+```
+cd ds5100-finalproject-ksg8xy
+```
+**Step 5:** Install the montecarlo pacakge by running
+```
+pip install .
+```
+**Step 6:** Confirm the package installed correctly by running
+```
+cd ..
+python
+import montecarlo
+```
+You should receive the following message: 
+```
+Welcome to the montecarlo module.
+```
